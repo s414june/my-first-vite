@@ -1,14 +1,15 @@
-
 <script setup lang="ts">
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import Button from "../components/Button.vue";
 // mounted(){
 //   console.log(this.$route.params.id);
 // }
-const methods = {
-  pushPage() {
-    let id = $store.state.id++;
-    // this.$router.push(`/page/${id}`);
-  },
+const store = useStore();
+const router = useRouter();
+const pushPage = () => {
+  let id = ++store.state.id;
+  router.push(`/page/${id}`);
 };
 // return {
 //   methods,
@@ -23,7 +24,7 @@ const methods = {
       您的意見是我們進步的動力。
     </div>
     <div class="w-full flex justify-center">
-      <Button msg="開始" class="w-60" @click="this.pushPage()"></Button>
+      <Button msg="開始" class="w-60" @click="pushPage"></Button>
     </div>
   </div>
 </template>
