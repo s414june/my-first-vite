@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../view/home.vue'
 const routes = [
   {
@@ -30,7 +30,7 @@ const routes = [
 // Vue-router新版本中，需要使用createRouter来创建路由
 const router = createRouter({
   // 指定路由的模式
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 })
 export default router
