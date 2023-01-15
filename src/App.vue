@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
+// import HelloWorld from "./components/HelloWorld.vue";
+import Footer from "./components/Footer.vue";
 </script>
 
 <template>
-  <!-- <div>
+  <div class="bg-zinc-100 flex flex-col h-screen">
+    <!-- <div>
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
@@ -11,12 +13,25 @@ import HelloWorld from "./components/HelloWorld.vue";
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div> -->
-  哈囉哈囉~
-  <ul class="divide-y divide-gray-200">
-    <HockeyTeamItem v-for="team in teams" :key="team.id" :team="team" />
-  </ul>
-  <!-- <HelloWorld msg="Vite + Vue" /> -->
-  <router-view></router-view>
+    <!-- <HelloWorld msg="Vite + Vue" /> -->
+    <div class="grow">
+      <div class="flex justify-center">
+        <div
+          class="block p-6 rounded-lg shadow-lg bg-white max-w-full w-192 m-3"
+        >
+          <!-- <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">
+            Card title
+          </h5>
+          <p class="text-gray-700 text-base mb-4"> -->
+          <!-- </p> -->
+          <router-view></router-view>
+        </div>
+      </div>
+    </div>
+    <div>
+      <Footer />
+    </div>
+  </div>
 </template>
 
 <style scoped>

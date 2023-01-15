@@ -3,7 +3,7 @@ import Home from '../view/home.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/home',
+    redirect: '/start',
   },
   {
     path: '/home',
@@ -14,6 +14,17 @@ const routes = [
     path: '/about',
     name: 'about',
     component: () => import('../view/about.vue')
+  },
+  {
+    path: '/start',
+    name: 'start',
+    component: () => import('../view/start.vue')
+  }
+  ,
+  {
+    path: '/page/:id',
+    name: 'page',
+    component: () => import('../view/page.vue')
   }
 ]
 // Vue-router新版本中，需要使用createRouter来创建路由
