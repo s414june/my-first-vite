@@ -4,7 +4,7 @@ import Footer from "./components/Footer.vue";
 </script>
 
 <template>
-  <div class="bg-zinc-100 flex flex-col h-screen">
+  <div class="bg-zinc-100 flex flex-col">
     <!-- <div>
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
@@ -16,9 +16,7 @@ import Footer from "./components/Footer.vue";
     <!-- <HelloWorld msg="Vite + Vue" /> -->
     <div class="grow">
       <div class="flex justify-center">
-        <div
-          class="block p-6 rounded-lg shadow-lg bg-white max-w-full w-192 m-3"
-        >
+        <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full w-192 m-3">
           <!-- <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">
             Card title
           </h5>
