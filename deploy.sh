@@ -1,3 +1,4 @@
+npm run build
 cd dist
 git add -A
 git commit -m "部署"

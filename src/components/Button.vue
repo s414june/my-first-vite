@@ -24,9 +24,8 @@ defineProps<{ msg: string, class: string }>();
       transition
       duration-150
       ease-in-out
-      my-3 
-      {{class}}
-    "
+      my-3"
+      :class="class"
   >
     {{msg}}
   </button>

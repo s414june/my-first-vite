@@ -7,10 +7,6 @@ import Button from "../components/Button.vue";
 // }
 const store = useStore();
 const router = useRouter();
-const pushPage = () => {
-  let id = ++store.state.id;
-  router.push(`/page/${id}`);
-};
 // return {
 //   methods,
 // };
@@ -24,7 +20,7 @@ const pushPage = () => {
       您的意見是我們進步的動力。
     </div>
     <div class="w-full flex justify-center">
-      <Button msg="開始" class="w-60" @click="pushPage"></Button>
+      <Button msg="開始" class="w-60" @click="store.commit('pushPage', { router: router })"></Button>
     </div>
   </div>
 </template>
