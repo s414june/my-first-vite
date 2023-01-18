@@ -8,7 +8,7 @@ const pages = [
         blocks: [
             {
                 id: 1,
-                element: "div",
+                element: "Fivestar",
                 type: "Fivestar",
                 text: "整體舒適性?",
                 order: 0,
@@ -17,7 +17,7 @@ const pages = [
             },
             {
                 id: 2,
-                element: "div",
+                element: "Fivestar",
                 type: "Fivestar",
                 text: "你覺得?",
                 order: 0,
@@ -26,7 +26,7 @@ const pages = [
             },
             {
                 id: 3,
-                element: "div",
+                element: "Fivestar",
                 type: "Fivestar",
                 text: "你覺得?",
                 order: 0,
@@ -111,12 +111,16 @@ const pages = [
         blocks: [
             {
                 id: 1,
-                element: "p",
+                element: "div",
                 type: "",
-                text: "歡迎留下您的建議！您的意見是我們進步的動力。",
                 order: 0,
                 // required: true,
-                options: [],
+                options: [
+                    {
+                        element: "p",
+                        text: "歡迎留下您的建議！您的意見是我們進步的動力。",
+                    }
+                ],
             },
             {
                 id: 2,
