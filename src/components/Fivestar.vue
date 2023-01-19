@@ -6,7 +6,7 @@ function hasScore(starNum: number) {
   let hasScore = false;
   if (scoreNum >= starNum) hasScore = true;
   return {
-    "text-blue-500": hasScore,
+    "text-cyan-500": hasScore,
     "text-gray-200": !hasScore
   };
 }
@@ -17,23 +17,23 @@ function hasScore(starNum: number) {
 <template>
   <div class="flex">
     <StarIcon
-      class="w-16"
+      class="w-12"
       :class="hasScore(1)"
     ></StarIcon>
     <StarIcon
-      class="w-16"
+      class="w-12"
       :class="hasScore(2)"
     ></StarIcon>
     <StarIcon
-      class="w-16"
+      class="w-12"
       :class="hasScore(3)"
     ></StarIcon>
     <StarIcon
-      class="w-16"
+      class="w-12"
       :class="hasScore(4)"
     ></StarIcon>
     <StarIcon
-      class="w-16"
+      class="w-12"
       :class="hasScore(5)"
     ></StarIcon>
   </div>

@@ -169,18 +169,25 @@ export default createStore({
     state: {
         num: 111,
         id: 0,
-        pages: pages
+        pages: pages,
+        disable: {
+            left: false,
+            right: false,
+        },
     },
     mutations: {
         pushPage(state, payload) {
             let router = payload.router;
-            if (!router) return;
             let num = payload.num;
-            let id = 0;
-            if (num) {
-                id = state.id + num;
-                state.id = id;
-            } else id = ++state.id;
+            let force = payload.force;
+            if (!router || !num) return;
+            let id = parseInt(state.id);
+            if (num > 0 && id >= state.pages.length && !force)
+                return;
+            else if (num < 0 && id <= 0 && !force)
+                return;
+            id += parseInt(num);
+            state.id = id;
 
             let url = ""
             if (id < 1)

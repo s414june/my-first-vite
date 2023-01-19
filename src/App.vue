@@ -1,19 +1,42 @@
 <script setup lang="ts">
 // import HelloWorld from "./components/HelloWorld.vue";
 import Footer from "./components/Footer.vue";
-import { onMounted } from "vue";
-// import { useRouter } from "vue-router";
+import { onMounted, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 const store = useStore();
+const route = useRoute();
 // const router = useRouter();
 onMounted(() => {
-  let nowUrlArr = location.hash.split("/");
-  let componentType = nowUrlArr[1];
-  if (componentType == "page") {
-    let pageNum = nowUrlArr[2];
-    store.state.id = pageNum;
-  }
+  let path = location.hash.split("/").slice(1, 3).join("/");
+  changeId(path);
+  changeArrowDisable();
 });
+watch(
+  () => route.path,
+  (path) => {
+    changeId(path);
+    changeArrowDisable();
+  }
+);
+function changeId(path) {
+  let componentType = path.split("/")[0];
+  switch (componentType) {
+    case "start":
+      store.state.id = 0;
+      break;
+    case "page":
+      store.state.id = path.split("/").pop();
+      break;
+    case "end":
+      store.state.id = store.state.pages.length + 1;
+      break;
+  }
+}
+function changeArrowDisable() {
+  store.state.disable.left = store.state.id <= 0 ? true : false;
+  store.state.disable.right = store.state.id >= store.state.pages.length ? true : false;
+}
 </script>
 
 <template>

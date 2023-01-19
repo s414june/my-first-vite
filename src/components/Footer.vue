@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/24/solid";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
@@ -12,12 +12,14 @@ const router = useRouter();
 </script>
 
 <template>
-  <footer class="w-full bg-white h-30 px-5 shadow-2xl shadow-black flex justify-center bottom-0 fixed">
+  <footer
+    class="w-full bg-white h-30 px-5 shadow-2xl shadow-black flex justify-center bottom-0 fixed"
+  >
     <div class="flex justify-between max-w-full w-192 m-3">
       <div class="flex w-3/4 items-center">
         <!-- <div class="bg-zinc-200 h-5 w-full rounded-md m-1"></div> -->
         <div class="w-full bg-gray-200 h-5 rounded-md overflow-hidden relative">
-          <div class="bg-blue-600 h-full" style="width: 25%"></div>
+          <div class="bg-cyan-500 h-full" style="width: 25%"></div>
         </div>
         <div class="mx-2">0%</div>
       </div>
@@ -25,14 +27,16 @@ const router = useRouter();
         <div
           class="bg-zinc-200 w-10 h-10 rounded-md m-1 p-2 cursor-pointer"
           @click="store.commit('pushPage', { router: router, num: -1 })"
+          :class="{ 'opacity-40': store.state.disable.left }"
         >
-          <ChevronLeftIcon class="text-blue-500" />
+          <ChevronLeftIcon class="text-cyan-500" />
         </div>
         <div
           class="bg-zinc-200 w-10 h-10 rounded-md m-1 p-2 cursor-pointer"
-          @click="store.commit('pushPage', { router: router })"
+          @click="store.commit('pushPage', { router: router, num: 1 })"
+          :class="{ 'opacity-40': store.state.disable.right }"
         >
-          <ChevronRightIcon class="text-blue-500" />
+          <ChevronRightIcon class="text-cyan-500" />
         </div>
       </div>
     </div>
