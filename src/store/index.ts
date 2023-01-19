@@ -181,7 +181,7 @@ export default createStore({
             let num = payload.num;
             let force = payload.force;
             if (!router || !num) return;
-            let id = parseInt(state.id);
+            let id = state.id;
             if (num > 0 && id >= state.pages.length && !force)
                 return;
             else if (num < 0 && id <= 0 && !force)
