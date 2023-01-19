@@ -37,6 +37,9 @@ function changeArrowDisable() {
   store.state.disable.left = store.state.id <= 0 ? true : false;
   store.state.disable.right = store.state.id >= store.state.pages.length ? true : false;
 }
+window.onchange = function(){
+  let questions = document.querySelectorAll(".question:not(.form-hide)");
+}
 </script>
 
 <template>

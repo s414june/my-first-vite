@@ -3,89 +3,92 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const pages = [
     {
-        id: 1,
         title: "滿意度調查",
         blocks: [
             {
                 id: 1,
-                element: "Fivestar",
-                type: "Fivestar",
+                component: "FormFivestar",
                 text: "整體舒適性?",
                 order: 0,
                 required: true,
                 options: [],
+                value: ""
             },
             {
                 id: 2,
-                element: "Fivestar",
-                type: "Fivestar",
+                component: "FormFivestar",
                 text: "你覺得?",
                 order: 0,
                 required: true,
                 options: [],
+                value: ""
             },
             {
                 id: 3,
-                element: "Fivestar",
-                type: "Fivestar",
+                component: "FormFivestar",
                 text: "你覺得?",
                 order: 0,
                 required: true,
                 options: [],
+                value: ""
             },
         ],
     },
     {
-        id: 2,
         title: "報修調查",
         blocks: [
             {
-                element: "select",
-                type: "",
+                component: "FormSelect",
                 text: "您現在所在位置：",
+                id: 4,
                 order: 0,
                 options: [
                     {
-                        id: 1,
                         element: "option",
                         text: "男廁",
                         value: "1",
                     },
                     {
-                        id: 2,
                         element: "option",
                         text: "女廁",
                         value: "2",
                     },
                 ],
                 required: true,
+                value: ""
             },
             {
-                element: "input",
+                component: "FormCheck",
                 type: "radio",
                 text: "是否需要報修？",
+                id: 5,
                 order: 0,
                 options: [
                     {
-                        id: 3,
                         element: "label",
                         text: "不需要",
                         value: "0",
+                        // children:-1
+                        childrenhide: 1,
+                        children: 6
                     },
                     {
-                        id: 4,
                         element: "label",
                         text: "需要",
                         value: "1",
+                        childrenhide: 0,
+                        children: 6
                     },
                 ],
                 required: true,
+                value: ""
             },
             {
-                element: "select",
+                component: "FormSelect",
                 type: "",
                 text: "故障物品",
-                parent: [4],
+                hide: true,
+                id: 6,
                 order: 0,
                 options: [
                     {
@@ -102,62 +105,72 @@ const pages = [
                     },
                 ],
                 required: true,
+                value: ""
             },
         ],
     },
     {
-        id: 3,
         title: "意見回饋",
         blocks: [
             {
-                id: 1,
+                id: 7,
+                component: "FormInfo",
                 element: "div",
                 type: "",
                 order: 0,
                 // required: true,
                 options: [
                     {
+                        id: 1,
                         element: "p",
                         text: "歡迎留下您的建議！您的意見是我們進步的動力。",
                     }
                 ],
+                value: ""
             },
             {
-                id: 2,
+                id: 8,
+                component: "FormControl",
                 element: "textarea",
-                type: "Textarea",
+                type: "",
                 text: "意見回饋",
                 order: 0,
                 required: false,
                 options: [],
+                value: ""
             },
             {
-                id: 3,
+                id: 9,
+                component: "FormControl",
                 element: "input",
                 type: "text",
                 text: "姓名",
                 order: 0,
                 required: false,
                 options: [],
+                value: ""
             },
             {
-                id: 4,
+                id: 10,
+                component: "FormControl",
                 element: "input",
                 type: "text",
                 text: "聯絡電話",
                 order: 0,
                 required: false,
                 options: [],
+                value: ""
             },
-
             {
-                id: 4,
+                id: 11,
+                component: "FormControl",
                 element: "input",
                 type: "email",
                 text: "電子信箱",
                 order: 0,
                 required: false,
                 options: [],
+                value: ""
             },
         ],
     },
@@ -173,7 +186,7 @@ export default createStore({
         disable: {
             left: false,
             right: false,
-        },
+        }
     },
     mutations: {
         pushPage(state, payload) {
