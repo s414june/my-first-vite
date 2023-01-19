@@ -31,7 +31,7 @@ const changeNeed = (e) => {
 <template>
   <div v-for="(page, index) in pages" v-show="store.state.id == index + 1">
     <div class="mb-5">
-      <h2 class="text-3xl font-bold">
+      <h2 class="text-3xl font-bold before:block before:absolute before:w-2 before:h-10 before:left-0 before:bg-cyan-500">
         {{ page.title }}
       </h2>
       <div

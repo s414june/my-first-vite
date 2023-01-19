@@ -26,7 +26,7 @@ function changeId(path) {
       store.state.id = 0;
       break;
     case "page":
-      store.state.id = path.split("/").pop();
+      store.state.id = parseInt(path.split("/").pop());
       break;
     case "end":
       store.state.id = store.state.pages.length + 1;
@@ -52,7 +52,7 @@ function changeArrowDisable() {
     <!-- <HelloWorld msg="Vite + Vue" /> -->
     <div class="grow pb-20">
       <div class="flex justify-center">
-        <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full w-192 m-3">
+        <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full w-192 m-4 relative">
           <!-- <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">
             Card title
           </h5>
