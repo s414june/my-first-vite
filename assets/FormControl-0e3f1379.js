@@ -1,0 +1,1 @@
+import{d as l,o,c as n,i as t,j as c}from"./index-7a5ceeab.js";const p=l({__name:"FormControl",props:{block:null,index:null},setup(e){return(r,a)=>(o(),n("div",null,[(o(),t(c(e.block.element),{type:e.block.type,class:"w-full border border-cyan-500 rounded p-2 px-3"},null,8,["type"]))]))}});export{p as default};
