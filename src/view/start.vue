@@ -11,6 +11,9 @@ const router = useRouter();
 //   methods,
 // };
 // store.state.disable.left = true;
+function pushToPage() {
+  router.push("/page/1");
+}
 </script>
 <template>
   <div class="mb-5">
@@ -24,7 +27,7 @@ const router = useRouter();
       <Button
         msg="開始"
         class="w-60"
-        @click="store.commit('pushPage', { router: router, num: 1 })"
+        @click="pushToPage()"
       ></Button>
     </div>
   </div>

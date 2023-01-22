@@ -1,35 +1,52 @@
 <script setup lang="ts">
+import { ref } from "vue";
 defineProps<{
   block: {
     id: "";
     element: "";
+    type: "";
+    text: "";
+    hide: boolean;
     options: [
       {
         id: "";
         element: "";
         text: "";
+        value: "";
+        children: {
+          id: number;
+          hide: boolean;
+        };
       }
     ];
+    value: "";
+    required:boolean
   };
-  index:number
 }>();
+let error = ref(false);
+function checkValidation(event) {
+  let value = event.target.value;
+  error.value = value === "" ? true : false;
+}
 </script>
 <template>
-  <div class="flex">
-    <select 
-      class="text-lg text-gray-500 w-full border border-cyan-500 p-2 px-3 pr-8 rounded focus:outline-none focus:shadow-no-offset focus:shadow-cyan-500/50 select"
-    >
-      <slot>
-        <option
-          v-for="option in block.options"
-          :value="option.id"
-        >
-          <slot>
-            {{ option.text }}
-          </slot>
+  <div>
+    <h5 class="text-xl font-bold mb-3">
+      {{ block.text }}
+      <span class="text-red-500" v-if="block.required">*</span>
+    </h5>
+    <div class="flex">
+      <select v-model="block.value"
+        @change="checkValidation($event)"
+        class="text-lg text-gray-500 w-full border border-cyan-500 p-2 px-3 pr-8 rounded focus:outline-none focus:shadow-no-offset focus:shadow-cyan-500/50 select"
+      >
+        <option value="">請選擇</option>
+        <option v-for="option in block.options" :value="option.id">
+          {{ option.text }}
         </option>
-      </slot>
-    </select>
+      </select>
+    </div>
+    <div v-show="error" class="m-1 text-red-500">請選擇</div>
   </div>
 </template>
 <style scope>

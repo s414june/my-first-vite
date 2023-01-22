@@ -1,6 +1,4 @@
 import { createStore } from 'vuex'
-import { useRouter } from "vue-router";
-const router = useRouter();
 const pages = [
     {
         title: "滿意度調查",
@@ -12,7 +10,7 @@ const pages = [
                 order: 0,
                 required: true,
                 options: [],
-                value: ""
+                value: "0"
             },
             {
                 id: 2,
@@ -21,7 +19,7 @@ const pages = [
                 order: 0,
                 required: true,
                 options: [],
-                value: ""
+                value: "0"
             },
             {
                 id: 3,
@@ -30,7 +28,7 @@ const pages = [
                 order: 0,
                 required: true,
                 options: [],
-                value: ""
+                value: "0"
             },
         ],
     },
@@ -68,16 +66,19 @@ const pages = [
                         element: "label",
                         text: "不需要",
                         value: "0",
-                        // children:-1
-                        childrenhide: 1,
-                        children: 6
+                        children: {
+                            id: 6,
+                            hide: true
+                        }
                     },
                     {
                         element: "label",
                         text: "需要",
                         value: "1",
-                        childrenhide: 0,
-                        children: 6
+                        children: {
+                            id: 6,
+                            hide: false
+                        }
                     },
                 ],
                 required: true,
@@ -186,30 +187,31 @@ export default createStore({
         disable: {
             left: false,
             right: false,
-        }
+        },
+        progress: 0,
+        blockRefs: {}
     },
     mutations: {
         pushPage(state, payload) {
             let router = payload.router;
             let num = payload.num;
-            let force = payload.force;
-            if (!router || !num) return;
-            let id = state.id;
-            if (num > 0 && id >= state.pages.length && !force)
-                return;
-            else if (num < 0 && id <= 0 && !force)
-                return;
-            id += parseInt(num);
-            state.id = id;
+            let nowId = 0;
+            let routerVal = router.currentRoute.value;
+            if (routerVal.name == "page") {
+                nowId = parseInt(router.currentRoute.value.params.id.toString());
+            } else if (routerVal.name == "end") {
+                nowId = state.pages.length + 1;
+            }
 
-            let url = ""
-            if (id < 1)
-                url = "/start"
-            else if (id > state.pages.length)
-                url = "/end"
-            else
-                url = "/page/" + id;
+            if (nowId <= 0 && num < 0) return;
+            if (nowId >= state.pages.length && num > 0) return;
+            nowId += num;
 
+            let url = "";
+            if (nowId > state.pages.length) return;
+
+            if (nowId < 1) url = "/start";
+            else url = "/page/" + nowId;
             router.push(url);
         }
     }

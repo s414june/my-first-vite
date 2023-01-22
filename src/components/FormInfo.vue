@@ -3,31 +3,36 @@ defineProps<{
   block: {
     id: "";
     element: "";
+    type: "";
+    text: "";
+    hide: boolean;
     options: [
       {
         id: "";
         element: "";
         text: "";
+        value: "";
+        children: {
+          id: number;
+          hide: boolean;
+        };
       }
     ];
+    value: "";
   };
-  index:number
 }>();
 </script>
 <template>
-  <div class="flex">
-    <div
-      class="w-full text-lg text-gray-500"
-    >
-      <slot>
-        <p
-          v-for="option in block.options"
-        >
-          <slot>
-            {{ option.text }}
-          </slot>
+  <div>
+    <h5 class="text-xl font-bold mb-3">
+      {{ block.text }}
+    </h5>
+    <div class="flex">
+      <div class="w-full text-lg text-gray-500">
+        <p v-for="option in block.options">
+          {{ option.text }}
         </p>
-      </slot>
+      </div>
     </div>
   </div>
 </template>

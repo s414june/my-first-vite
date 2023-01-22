@@ -24,7 +24,10 @@ const routes = [
   {
     path: '/page/:id',
     name: 'page',
-    component: () => import('../view/page.vue')
+    component: () => import('../view/page.vue'),
+    meta: {
+      keepAlive: true
+    }
   }
 ]
 // Vue-router新版本中，需要使用createRouter来创建路由
