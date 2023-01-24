@@ -40,33 +40,34 @@ const _toggleChildren = (children, block) => {
 const updateProgress = () => {
   console.log(blockRefs);
 };
-const pageNum = ref(0);
 onMounted(() => {
   isMounted = true;
   let nowPath = router.currentRoute.value.params.id;
-  pageNum.value = parseInt(nowPath.toString());
+  store.state.pageNum = parseInt(nowPath.toString());
 });
 watch(
   () => route.path,
   (path) => {
     if (!router.currentRoute.value.params.id) return;
     let nowPath = router.currentRoute.value.params.id;
-    pageNum.value = parseInt(nowPath.toString());
+    store.state.pageNum = parseInt(nowPath.toString());
   }
 );
 function checkForm() {
-  let hasError = false;
-  blockRefs.forEach((pageData) => {
-    if (pageData.page == store.state.page) {
-      console.log(pageData.err);
-      if (pageData.err == true) {
-        console.log(pageData.err);
-        hasError = true;
-      }
-    }
-  });
-  if (hasError) return;
+  // let hasError = false;
+  // blockRefs.forEach((pageData) => {
+  //   if (pageData.page == store.state.page) {
+  //   }
+  // });
+  // if (hasError) return;
   // store.commit("pushPage", { router: router, num: 1 });
+  let nowBlocks = pages[store.state.pageNum - 1].blocks;
+  let isOk = true;
+  nowBlocks.forEach((nowBlock) => {
+    nowBlock.verified = true;
+    if (nowBlock.completed == false) isOk = false;
+  });
+  if (!isOk) return;
   pushPage(1);
 }
 function pushPage(num) {
@@ -78,11 +79,14 @@ function pushPage(num) {
     },
   });
 }
+function submit() {
+  store.commit("pushPage", { router: router, num: 1, force: true });
+}
 </script>
 <template>
   <div
     v-for="(page, index) in pages"
-    v-show="pageNum == index + 1"
+    v-show="store.state.pageNum == index + 1"
     @change="updateProgress"
   >
     <div class="mb-5">
@@ -110,14 +114,14 @@ function pushPage(num) {
     <Button
       msg="下一頁"
       class=""
-      @click="checkForm()"
-      v-show="pageNum < store.state.pages.length"
+      @click="store.commit('pushPage', { router: router, num: 1 })"
+      v-show="store.state.pageNum < store.state.pages.length"
     ></Button>
     <Button
       msg="送出"
       class="w-60"
-      @click="checkForm()"
-      v-show="pageNum >= store.state.pages.length"
+      @click="submit()"
+      v-show="store.state.pageNum >= store.state.pages.length"
     ></Button>
   </div>
 </template>

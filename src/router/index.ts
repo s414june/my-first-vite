@@ -28,6 +28,11 @@ const routes = [
     meta: {
       keepAlive: true
     }
+  },
+  {
+    path: '/end',
+    name: 'end',
+    component: () => import('../view/end.vue')
   }
 ]
 // Vue-router新版本中，需要使用createRouter来创建路由

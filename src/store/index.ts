@@ -6,29 +6,62 @@ const pages = [
             {
                 id: 1,
                 component: "FormFivestar",
-                text: "整體舒適性?",
+                text: "您覺得環境整潔度如何?",
                 order: 0,
                 required: true,
                 options: [],
-                value: "0"
+                value: "0",
+                hide: false,
+                completed: false,
+                verified: false
             },
             {
                 id: 2,
                 component: "FormFivestar",
-                text: "你覺得?",
+                text: "您覺得設備是否齊全?",
                 order: 0,
                 required: true,
                 options: [],
-                value: "0"
+                value: "0",
+                hide: false,
+                completed: false,
+                verified: false
             },
             {
                 id: 3,
                 component: "FormFivestar",
-                text: "你覺得?",
+                text: "您覺得動線引導標示是否清晰?",
                 order: 0,
                 required: true,
                 options: [],
-                value: "0"
+                value: "0",
+                hide: false,
+                completed: false,
+                verified: false
+            },
+            {
+                id: 3,
+                component: "FormFivestar",
+                text: "您覺得此環境的安全性如何?",
+                order: 0,
+                required: true,
+                options: [],
+                value: "0",
+                hide: false,
+                completed: false,
+                verified: false
+            },
+            {
+                id: 3,
+                component: "FormFivestar",
+                text: "您覺得此環境的照明是否足夠?",
+                order: 0,
+                required: true,
+                options: [],
+                value: "0",
+                hide: false,
+                completed: false,
+                verified: false
             },
         ],
     },
@@ -53,7 +86,10 @@ const pages = [
                     },
                 ],
                 required: true,
-                value: ""
+                value: "",
+                hide: false,
+                completed: false,
+                verified: false
             },
             {
                 component: "FormCheck",
@@ -82,13 +118,15 @@ const pages = [
                     },
                 ],
                 required: true,
-                value: ""
+                value: "",
+                hide: false,
+                completed: false,
+                verified: false
             },
             {
                 component: "FormSelect",
                 type: "",
                 text: "故障物品",
-                hide: true,
                 id: 6,
                 order: 0,
                 options: [
@@ -104,9 +142,56 @@ const pages = [
                         text: "洗手乳",
                         value: "2",
                     },
+                    {
+                        id: 6,
+                        element: "option",
+                        text: "門鎖",
+                        value: "3",
+                    },
+                    {
+                        id: 6,
+                        element: "option",
+                        text: "地面",
+                        value: "3",
+                    },
                 ],
                 required: true,
-                value: ""
+                value: "",
+                hide: true,
+                completed: false,
+                verified: false
+            },
+            {
+                component: "FormSelect",
+                type: "",
+                text: "故障狀態描述",
+                id: 6,
+                order: 0,
+                options: [
+                    {
+                        id: 5,
+                        element: "option",
+                        text: "備品不足",
+                        value: "1",
+                    },
+                    {
+                        id: 6,
+                        element: "option",
+                        text: "積水",
+                        value: "2",
+                    },
+                    {
+                        id: 6,
+                        element: "option",
+                        text: "損壞",
+                        value: "3",
+                    },
+                ],
+                required: true,
+                value: "",
+                hide: true,
+                completed: false,
+                verified: false
             },
         ],
     },
@@ -127,7 +212,10 @@ const pages = [
                         text: "歡迎留下您的建議！您的意見是我們進步的動力。",
                     }
                 ],
-                value: ""
+                value: "",
+                hide: false,
+                completed: false,
+                verified: false
             },
             {
                 id: 8,
@@ -138,7 +226,10 @@ const pages = [
                 order: 0,
                 required: false,
                 options: [],
-                value: ""
+                value: "",
+                hide: false,
+                completed: false,
+                verified: false
             },
             {
                 id: 9,
@@ -149,7 +240,10 @@ const pages = [
                 order: 0,
                 required: false,
                 options: [],
-                value: ""
+                value: "",
+                hide: false,
+                completed: false,
+                verified: false
             },
             {
                 id: 10,
@@ -160,7 +254,10 @@ const pages = [
                 order: 0,
                 required: false,
                 options: [],
-                value: ""
+                value: "",
+                hide: false,
+                completed: false,
+                verified: false
             },
             {
                 id: 11,
@@ -171,7 +268,10 @@ const pages = [
                 order: 0,
                 required: false,
                 options: [],
-                value: ""
+                value: "",
+                hide: false,
+                completed: false,
+                verified: false
             },
         ],
     },
@@ -189,12 +289,17 @@ export default createStore({
             right: false,
         },
         progress: 0,
-        blockRefs: {}
+        blockRefs: {},
+        pageNum: 0,
+        completed: false
     },
     mutations: {
         pushPage(state, payload) {
+            if (state.completed) return;
             let router = payload.router;
             let num = payload.num;
+            let force = payload.force;
+            if (!checkVerified(state) && num > 0) return;
             let nowId = 0;
             let routerVal = router.currentRoute.value;
             if (routerVal.name == "page") {
@@ -204,15 +309,34 @@ export default createStore({
             }
 
             if (nowId <= 0 && num < 0) return;
-            if (nowId >= state.pages.length && num > 0) return;
+            if (nowId >= state.pages.length && num > 0) {
+                if (!force) return;
+            }
             nowId += num;
 
             let url = "";
-            if (nowId > state.pages.length) return;
 
             if (nowId < 1) url = "/start";
-            else url = "/page/" + nowId;
+            else if (nowId <= state.pages.length) url = "/page/" + nowId;
+            else url = "/end";
             router.push(url);
+
+            function checkVerified(state) {
+                let nowBlocks = state.pages[state.pageNum - 1].blocks;
+                let isOk = true;
+                nowBlocks.forEach((nowBlock) => {
+                    nowBlock.verified = true;
+                    if (nowBlock.required && !nowBlock.completed && !nowBlock.hide) isOk = false;
+                });
+                return isOk;
+            }
+        },
+        changeVal(state, payload) {
+            let block = payload.block;
+            let value = payload.value;
+            block.value = value;
+            block.verified = true;
+            block.completed = value === "" ? false : true;
         }
     }
 })

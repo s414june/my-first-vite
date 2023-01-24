@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
 defineProps<{
   block: {
     id: "";
@@ -14,16 +16,19 @@ defineProps<{
         text: "";
         value: "";
         children: {
-          id: number;
-          hide: boolean;
+          // id: number;
+          // hide: boolean;
         };
       }
     ];
     value: "";
-    required:boolean
+    required: boolean;
+    completed: boolean;
+    verified: boolean;
   };
 }>();
 let error = ref(false);
+// @change="checkValidation($event)"
 function checkValidation(event) {
   let value = event.target.value;
   error.value = value === "" ? true : false;
@@ -36,9 +41,10 @@ function checkValidation(event) {
       <span class="text-red-500" v-if="block.required">*</span>
     </h5>
     <div class="flex">
-      <select v-model="block.value"
-        @change="checkValidation($event)"
+      <select
+        v-model="block.value"
         class="text-lg text-gray-500 w-full border border-cyan-500 p-2 px-3 pr-8 rounded focus:outline-none focus:shadow-no-offset focus:shadow-cyan-500/50 select"
+        @change="store.commit('changeVal', { block: block, value: block.value })"
       >
         <option value="">請選擇</option>
         <option v-for="option in block.options" :value="option.id">
@@ -46,7 +52,12 @@ function checkValidation(event) {
         </option>
       </select>
     </div>
-    <div v-show="error" class="m-1 text-red-500">請選擇</div>
+    <div
+      v-show="!block.completed && block.required && block.verified"
+      class="m-1 text-red-500"
+    >
+      請選擇
+    </div>
   </div>
 </template>
 <style scope>

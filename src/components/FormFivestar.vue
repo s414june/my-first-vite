@@ -24,16 +24,20 @@ const blockProps = defineProps<{
     ];
     value: "";
     required?: boolean;
+    completed: boolean;
+    verified: boolean;
   };
 }>();
 const scoreNum = ref(0);
 onMounted(() => {
   scoreNum.value = parseInt(blockProps.block.value);
 });
-const error = ref("");
 const changeScore = (num) => {
   blockProps.block.value = num;
   scoreNum.value = num;
+  if (num > 0) {
+    blockProps.block.completed = true;
+  }
 };
 </script>
 <template>
@@ -69,6 +73,11 @@ const changeScore = (num) => {
         :class="{ 'text-cyan-500': scoreNum >= 5, 'text-gray-200': scoreNum < 5 }"
       ></StarIcon>
     </div>
-    <div>{{ error }}</div>
+    <div
+      v-show="!block.completed && block.required && block.verified"
+      class="m-1 text-red-500"
+    >
+      請評分
+    </div>
   </div>
 </template>

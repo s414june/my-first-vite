@@ -37,7 +37,7 @@ watch(
   }
 );
 function changeArrowDisable() {
-  store.state.disable.left = nowId.value <= 0 ? true : false;
+  store.state.disable.left = nowId.value <= 0 || store.state.completed ? true : false;
   store.state.disable.right = nowId.value >= store.state.pages.length ? true : false;
 }
 </script>

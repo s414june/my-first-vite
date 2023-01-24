@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from "@vue/runtime-core";
 import { ref } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
 const blockProps = defineProps<{
   block: {
     id: "";
@@ -22,6 +24,8 @@ const blockProps = defineProps<{
     ];
     value: "";
     required: boolean;
+    completed: boolean;
+    verified: false;
   };
 }>();
 // const thisValue = ref(0);
@@ -31,6 +35,7 @@ function toggleChildren(children) {
 }
 function changeVal(value) {
   blockProps.block.value = value;
+  blockProps.block.completed = value === "" ? false : true;
 }
 </script>
 <template>
@@ -51,7 +56,7 @@ function changeVal(value) {
           :value="option.value"
           :name="'check_name_' + block.id"
           :checked="option.value == block.value"
-          @change="changeVal(option.value)"
+          @change="store.commit('changeVal', { block: block, value: option.value })"
         />
         <label
           v-if="block.options.length > 0"
@@ -60,6 +65,12 @@ function changeVal(value) {
         >
           {{ option.text }}
         </label>
+      </div>
+      <div
+        v-show="!block.completed && block.required && block.verified"
+        class="m-1 mt-0 text-red-500"
+      >
+        請選擇
       </div>
     </div>
   </div>
