@@ -2,40 +2,46 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
-defineProps<{
+const blockProps = defineProps<{
   block: {
-    id: "";
-    element: "";
-    type: "";
-    text: "";
-    hide: boolean;
+    id: "",
+    element: "",
+    type: "",
+    text: "",
+    hide: boolean,
     options: [
       {
-        id: "";
-        element: "";
-        text: "";
-        value: "";
-        children: {
-          // id: number;
-          // hide: boolean;
-        };
+        id: "",
+        element: "",
+        text: "",
+        value: "",
+        childrens: []
       }
-    ];
-    value: "";
-    required: boolean;
-    completed: boolean;
-    verified: boolean;
-  };
+    ],
+    value: "",
+    required: boolean,
+    completed: boolean,
+    verified: boolean,
+    childrens: []
+  },
+  index: number
 }>();
-let error = ref(false);
-// @change="checkValidation($event)"
-function checkValidation(event) {
-  let value = event.target.value;
-  error.value = value === "" ? true : false;
+const emit = defineEmits(["toggleChildren", "countProgress"]);
+function toggleChildren(childrens, index) {
+  emit("toggleChildren", childrens, index);
+}
+function countProgress() {
+  emit("countProgress");
+}
+function changeForm(childrens, index) {
+  toggleChildren(childrens, index);
+  countProgress();
 }
 </script>
 <template>
-  <div>
+  <div
+  @change="changeForm(block.childrens, index)"
+  >
     <h5 class="text-xl font-bold mb-3">
       {{ block.text }}
       <span class="text-red-500" v-if="block.required">*</span>

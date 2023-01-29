@@ -1,29 +1,31 @@
 <script setup lang="ts">
 defineProps<{
   block: {
-    id: "";
-    element: "";
-    type: "";
-    text: "";
-    hide: boolean;
+    id: "",
+    element: "",
+    type: "",
+    text: "",
+    hide: boolean,
     options: [
       {
-        id: "";
-        element: "";
-        text: "";
-        value: "";
-        children: {
-          id: number;
-          hide: boolean;
-        };
+        id: "",
+        element: "",
+        text: "",
+        value: "",
+        childrens: {
+          id: number,
+          hide: boolean
+        }
       }
-    ];
-    value: "";
-  };
+    ],
+    value: "",
+  },
+  index: number
 }>();
 </script>
 <template>
-  <div>
+  <div
+  >
     <h5 class="text-xl font-bold mb-3">
       {{ block.text }}
     </h5>

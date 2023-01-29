@@ -37,7 +37,10 @@ watch(
   }
 );
 function changeArrowDisable() {
-  store.state.disable.left = nowId.value <= 0 || store.state.completed ? true : false;
+  let isEnd = false;
+  let nowPathName = router.currentRoute.value.name;
+  if (nowPathName == "end") isEnd = true;
+  store.state.disable.left = nowId.value <= 0 || isEnd ? true : false;
   store.state.disable.right = nowId.value >= store.state.pages.length ? true : false;
 }
 </script>
@@ -51,8 +54,8 @@ function changeArrowDisable() {
         <!-- <div class="bg-zinc-200 h-5 w-full rounded-md m-1"></div> -->
         <div class="w-full bg-gray-200 h-5 rounded-md overflow-hidden relative">
           <div
-            class="bg-cyan-500 h-full"
-            :style="'width: ' + store.state.progress + '%'"
+            class="bg-cyan-500 h-full duration-500"
+            :style="'width: ' + store.state.progress + '%;'"
           ></div>
         </div>
         <div class="mx-2">{{ store.state.progress }}%</div>
@@ -77,4 +80,6 @@ function changeArrowDisable() {
   </footer>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

@@ -1,12 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from "@vue/runtime-core";
-import { useStore } from "vuex";
-const store = useStore();
-
-onMounted(() => {
-  store.state.completed = true;
-});
-
 </script>
 <template>
   <div class="mb-5">

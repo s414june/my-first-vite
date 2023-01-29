@@ -3,7 +3,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import Button from "../components/Button.vue";
 import { ComponentPublicInstance, HTMLAttributes, onMounted, ref, watch } from "vue";
-import { reactive, defineAsyncComponent } from "vue";
+import { defineAsyncComponent } from "vue";
 const store = useStore();
 const router = useRouter();
 const route = useRoute();
@@ -31,14 +31,18 @@ const setBlockRefs = (
     });
   }
 };
-const _toggleChildren = (children, block) => {
-  let childrenRef = blockRefs.find((itemRef) => itemRef.id == children.id);
-  children.hide
-    ? childrenRef.el.classList.add("form-hide")
-    : childrenRef.el.classList.remove("form-hide");
-};
-const updateProgress = () => {
-  console.log(blockRefs);
+const _toggleChildren = (childrens, index) => {
+  if (childrens.length <= 0) return;
+  pages[index].blocks.forEach((block) => {
+    childrens.forEach((children) => {
+      if (block.id === children.id) {
+        block.hide = children.hide;
+      }
+    });
+  });
+  // children.hide
+  //   ? childrenRef.el.classList.add("form-hide")
+  //   : childrenRef.el.classList.remove("form-hide");
 };
 onMounted(() => {
   isMounted = true;
@@ -53,43 +57,23 @@ watch(
     store.state.pageNum = parseInt(nowPath.toString());
   }
 );
-function checkForm() {
-  // let hasError = false;
-  // blockRefs.forEach((pageData) => {
-  //   if (pageData.page == store.state.page) {
-  //   }
-  // });
-  // if (hasError) return;
-  // store.commit("pushPage", { router: router, num: 1 });
-  let nowBlocks = pages[store.state.pageNum - 1].blocks;
-  let isOk = true;
-  nowBlocks.forEach((nowBlock) => {
-    nowBlock.verified = true;
-    if (nowBlock.completed == false) isOk = false;
-  });
-  if (!isOk) return;
-  pushPage(1);
-}
-function pushPage(num) {
-  let nowId = parseInt(router.currentRoute.value.params.id.toString());
-  nowId += num;
-  router.push({
-    params: {
-      id: nowId,
-    },
-  });
-}
 function submit() {
   store.commit("pushPage", { router: router, num: 1, force: true });
+}
+const _countProgress = () => {
+  let blocks = store.state.pages.map(page => page.blocks);
+  let flatBlocks = [].concat.apply([], blocks);
+  let total = flatBlocks.filter(page => page["hide"] === false).length;
+  let completed = flatBlocks.filter(page => page["hide"] === false && page["completed"] === true).length;
+  store.state.progress = ((completed / total) * 100).toFixed(1);
 }
 </script>
 <template>
   <div
     v-for="(page, index) in pages"
     v-show="store.state.pageNum == index + 1"
-    @change="updateProgress"
   >
-    <div class="mb-5">
+    <form class="mb-5">
       <h2
         class="text-3xl font-bold before:block before:absolute before:w-2 before:h-10 before:left-0 before:bg-cyan-500"
       >
@@ -98,17 +82,19 @@ function submit() {
       <div
         v-for="block in page.blocks"
         class="my-4 question"
-        :ref="(el) => setBlockRefs(el as HTMLElement,index, block.id,'')"
+        :ref="(el) => setBlockRefs(el as HTMLElement, index, block.id, '')"
         :class="{ 'form-hide need-toggle-hide': block.hide }"
       >
         <component
           :is="getFormComponent(block.component)"
           :block="block"
+          :index="index"
           @toggleChildren="_toggleChildren"
+          @countProgress="_countProgress"
         >
         </component>
       </div>
-    </div>
+    </form>
   </div>
   <div class="w-full flex justify-center">
     <Button

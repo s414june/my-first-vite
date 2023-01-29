@@ -13,7 +13,8 @@ const pages = [
                 value: "0",
                 hide: false,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
             {
                 id: 2,
@@ -25,7 +26,8 @@ const pages = [
                 value: "0",
                 hide: false,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
             {
                 id: 3,
@@ -37,7 +39,8 @@ const pages = [
                 value: "0",
                 hide: false,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
             {
                 id: 3,
@@ -49,7 +52,8 @@ const pages = [
                 value: "0",
                 hide: false,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
             {
                 id: 3,
@@ -61,7 +65,8 @@ const pages = [
                 value: "0",
                 hide: false,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
         ],
     },
@@ -89,7 +94,8 @@ const pages = [
                 value: "",
                 hide: false,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
             {
                 component: "FormCheck",
@@ -102,26 +108,37 @@ const pages = [
                         element: "label",
                         text: "不需要",
                         value: "0",
-                        children: {
+                        childrens: [{
                             id: 6,
                             hide: true
-                        }
+                        },
+                        {
+                            id: 7,
+                            hide: true
+                        }]
                     },
                     {
                         element: "label",
                         text: "需要",
                         value: "1",
-                        children: {
-                            id: 6,
-                            hide: false
-                        }
+                        childrens: [
+                            {
+                                id: 6,
+                                hide: false
+                            },
+                            {
+                                id: 7,
+                                hide: false
+                            }
+                        ]
                     },
                 ],
                 required: true,
                 value: "",
                 hide: false,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
             {
                 component: "FormSelect",
@@ -159,13 +176,14 @@ const pages = [
                 value: "",
                 hide: true,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
             {
                 component: "FormSelect",
                 type: "",
                 text: "故障狀態描述",
-                id: 6,
+                id: 7,
                 order: 0,
                 options: [
                     {
@@ -191,7 +209,8 @@ const pages = [
                 value: "",
                 hide: true,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
         ],
     },
@@ -229,7 +248,8 @@ const pages = [
                 value: "",
                 hide: false,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
             {
                 id: 9,
@@ -243,7 +263,8 @@ const pages = [
                 value: "",
                 hide: false,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
             {
                 id: 10,
@@ -257,7 +278,8 @@ const pages = [
                 value: "",
                 hide: false,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
             {
                 id: 11,
@@ -271,7 +293,8 @@ const pages = [
                 value: "",
                 hide: false,
                 completed: false,
-                verified: false
+                verified: false,
+                childrens: []
             },
         ],
     },
@@ -290,8 +313,7 @@ export default createStore({
         },
         progress: 0,
         blockRefs: {},
-        pageNum: 0,
-        completed: false
+        pageNum: 0
     },
     mutations: {
         pushPage(state, payload) {

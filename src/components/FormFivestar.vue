@@ -1,32 +1,32 @@
 <script setup lang="ts">
 import { StarIcon } from "@heroicons/vue/24/solid";
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
-const store = useStore();
 const blockProps = defineProps<{
   block: {
-    id?: "";
-    element?: "";
-    type?: "";
-    text?: "";
-    hide?: boolean;
-    options?: [
+    id?: "",
+    element?: "",
+    type?: "",
+    text?: "",
+    hide?: boolean,
+    options: [
       {
-        id?: "";
-        element?: "";
-        text?: "";
-        value?: "";
-        children?: {
-          id?: number;
-          hide?: boolean;
+        id?: "",
+        element?: "",
+        text?: "",
+        value?: "",
+        childrens?: {
+          id?: number,
+          hide?: boolean,
         };
       }
     ];
-    value: "";
-    required?: boolean;
-    completed: boolean;
-    verified: boolean;
-  };
+    value: "",
+    required?: boolean,
+    completed: boolean,
+    verified: boolean,
+    childrens: []
+  },
+  index: number
 }>();
 const scoreNum = ref(0);
 onMounted(() => {
@@ -39,9 +39,22 @@ const changeScore = (num) => {
     blockProps.block.completed = true;
   }
 };
+const emit = defineEmits(["toggleChildren", "countProgress"]);
+function toggleChildren(childrens, index) {
+  emit("toggleChildren", childrens, index);
+}
+function countProgress() {
+  emit("countProgress");
+}
+function changeForm(childrens, index) {
+  toggleChildren(childrens, index);
+  countProgress();
+}
 </script>
 <template>
-  <div>
+  <div
+    @click="changeForm(block.childrens, index);"
+  >
     <h5 class="text-xl font-bold mb-3">
       {{ block.text }}
       <span class="text-red-500" v-if="block.required">*</span>

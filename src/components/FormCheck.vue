@@ -1,42 +1,51 @@
 <script setup lang="ts">
-import { onMounted } from "@vue/runtime-core";
-import { ref } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 const blockProps = defineProps<{
   block: {
-    id: "";
-    element: "";
-    type: "";
-    text: "";
-    hide: boolean;
+    id: "",
+    element: "",
+    type: "",
+    text: "",
+    hide: boolean,
     options: [
       {
-        id: "";
-        element: "";
-        text: "";
-        value: "";
-        children: {
-          id: number;
-          hide: boolean;
-        };
+        id: "",
+        element: "",
+        text: "",
+        value: "",
+        childrens: {
+          id: number,
+          hide: boolean
+        },
       }
     ];
-    value: "";
-    required: boolean;
-    completed: boolean;
-    verified: false;
-  };
+    value: "",
+    required: boolean,
+    completed: boolean,
+    verified: false,
+  },
+  index: number
 }>();
-// const thisValue = ref(0);
-const emit = defineEmits(["toggleChildren"]);
-function toggleChildren(children) {
-  emit("toggleChildren", children);
+
+const emit = defineEmits(["toggleChildren", "countProgress"]);
+function toggleChildren(childrens, index) {
+  emit("toggleChildren", childrens, index);
 }
-function changeVal(value) {
-  blockProps.block.value = value;
-  blockProps.block.completed = value === "" ? false : true;
+function countProgress() {
+  emit("countProgress");
 }
+function changeForm(childrens, index) {
+  toggleChildren(childrens, index);
+  countProgress();
+}
+const defaultChildren = [{
+  childrens: {
+  },
+  value: "",
+  text: ""
+}];
+let options = blockProps.block.options.length > 0 ? blockProps.block.options : defaultChildren;
 </script>
 <template>
   <div>
@@ -46,9 +55,9 @@ function changeVal(value) {
     </h5>
     <div class="grid grid-cols-2 gap-4">
       <div
-        v-for="option in block.options"
+        v-for="option in options"
         class="rounded border border-cyan-500 p-2 px-3 flex"
-        @change="toggleChildren(option.children)"
+        @change="changeForm(option.childrens, index)"
       >
         <input
           :type="block.type"
