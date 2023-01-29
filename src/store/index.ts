@@ -317,7 +317,6 @@ export default createStore({
     },
     mutations: {
         pushPage(state, payload) {
-            if (state.completed) return;
             let router = payload.router;
             let num = payload.num;
             let force = payload.force;
