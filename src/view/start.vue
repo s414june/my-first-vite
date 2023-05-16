@@ -19,7 +19,7 @@ function pushToPage() {
   <div class="mb-5">
     <h1 class="text-cyan-500 text-3xl font-bold mb-2">遊客滿意度調查</h1>
     <div class="text-lg text-gray-500">
-      歡迎蒞臨西拉雅國家風景區！<br />
+      歡迎蒞臨蛙蛙國家風景區！<br />
       誠摯邀請您填寫滿意度問卷，<br />
       您的意見是我們進步的動力。
     </div>

@@ -320,6 +320,10 @@ export default createStore({
             let router = payload.router;
             let num = payload.num;
             let force = payload.force;
+            if (state.pageNum <= 0) {
+                router.push("/page/1");
+                return;
+            }
             if (!checkVerified(state) && num > 0) return;
             let nowId = 0;
             let routerVal = router.currentRoute.value;

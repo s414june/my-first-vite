@@ -11,6 +11,7 @@ const route = useRoute();
 
 // const count = ref(0)
 let nowId = ref(0);
+let isShow = ref(true);
 function getPage() {
   let routerVal = router.currentRoute.value;
   if (routerVal.name == "start") {
@@ -19,6 +20,7 @@ function getPage() {
     nowId.value = parseInt(router.currentRoute.value.params.id.toString());
   } else if (routerVal.name == "end") {
     nowId.value = store.state.pages.length + 1;
+    isShow.value = false;
   }
 }
 function pushPage(num: number) {
@@ -48,6 +50,7 @@ function changeArrowDisable() {
 <template>
   <footer
     class="w-full bg-white h-30 px-5 shadow-2xl shadow-black flex justify-center bottom-0 fixed"
+    v-show="isShow"
   >
     <div class="flex justify-between max-w-full w-192 m-3">
       <div class="flex w-3/4 items-center">
