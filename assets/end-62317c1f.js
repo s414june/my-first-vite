@@ -1,1 +1,0 @@
-import{_ as s,o as c,c as o,a as e,e as t}from"./index-a34ce813.js";const a={},n={class:"mb-5 py-3"},_=e("h1",{class:"text-cyan-500 text-3xl font-bold mb-2"},"感謝您！我們收到您的回應囉！",-1),r=e("div",{class:"text-lg text-gray-500"},[t(" 您的回饋是我們成長的動力，"),e("br"),t(" 期待下次與您相見！ ")],-1),d=[_,r];function l(i,x){return c(),o("div",n,d)}const h=s(a,[["render",l]]);export{h as default};
