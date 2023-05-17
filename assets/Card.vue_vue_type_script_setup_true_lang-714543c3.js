@@ -1,1 +1,0 @@
-import{d as o,g as s,r as t,o as a,u as r,f as n,h as l}from"./index-4bf7cdec.js";const c={class:"block p-6 rounded-lg shadow-lg bg-white max-w-full w-192 m-4 relative"},_=o({__name:"Card",props:["component","cKey"],setup(u){return r(),n(),l(),(e,p)=>(a(),s("div",c,[t(e.$slots,"default")]))}});export{_};
