@@ -4,6 +4,7 @@ import { useStore } from "vuex";
 import Button from "../components/Button.vue";
 import { ComponentPublicInstance, HTMLAttributes, onMounted, ref, watch } from "vue";
 import { defineAsyncComponent } from "vue";
+import Card from "../components/Card.vue";
 const store = useStore();
 const router = useRouter();
 const route = useRoute();
@@ -69,47 +70,31 @@ const _countProgress = () => {
 }
 </script>
 <template>
-  <div
-    v-for="(page, index) in pages"
-    v-show="store.state.pageNum == index + 1"
-  >
-    <form class="mb-5">
-      <h2
-        class="text-3xl font-bold before:block before:absolute before:w-2 before:h-10 before:left-0 before:bg-cyan-500"
-      >
-        {{ page.title }}
-      </h2>
-      <div
-        v-for="block in page.blocks"
-        class="my-4 question"
-        :ref="(el) => setBlockRefs(el as HTMLElement, index, block.id, '')"
-        :class="{ 'form-hide need-toggle-hide': block.hide }"
-      >
-        <component
-          :is="getFormComponent(block.component)"
-          :block="block"
-          :index="index"
-          @toggleChildren="_toggleChildren"
-          @countProgress="_countProgress"
-        >
-        </component>
-      </div>
-    </form>
-  </div>
-  <div class="w-full flex justify-center">
-    <Button
-      msg="下一頁"
-      class=""
-      @click="store.commit('pushPage', { router: router, num: 1 })"
-      v-show="store.state.pageNum < store.state.pages.length"
-    ></Button>
-    <Button
-      msg="送出"
-      class="w-60"
-      @click="submit()"
-      v-show="store.state.pageNum >= store.state.pages.length"
-    ></Button>
-  </div>
+  <TransitionGroup>
+    <div v-for="(page, index) in pages" v-show="store.state.pageNum == index + 1" :key="index">
+      <Card>
+        <form class="mb-5">
+          <h2
+            class="text-3xl font-bold before:block before:absolute before:w-2 before:h-10 before:left-0 before:bg-cyan-500">
+            {{ page.title }}
+          </h2>
+          <div v-for="block in page.blocks" class="my-4 question"
+            :ref="(el) => setBlockRefs(el as HTMLElement, index, block.id, '')"
+            :class="{ 'form-hide need-toggle-hide': block.hide }">
+            <component :is="getFormComponent(block.component)" :block="block" :index="index"
+              @toggleChildren="_toggleChildren" @countProgress="_countProgress">
+            </component>
+          </div>
+        </form>
+        <div class="w-full flex justify-center">
+          <Button msg="下一頁" class="" @click="store.commit('pushPage', { router: router, num: 1 })"
+            v-show="store.state.pageNum < store.state.pages.length"></Button>
+          <Button msg="送出" class="w-60" @click="submit()"
+            v-show="store.state.pageNum >= store.state.pages.length"></Button>
+        </div>
+      </Card>
+    </div>
+  </TransitionGroup>
 </template>
 <style scope>
 .form-hide {

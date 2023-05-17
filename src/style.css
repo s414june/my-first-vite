@@ -83,3 +83,20 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+  /* transition-duration: 1s; */
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+.v-enter-active{
+  transition-delay: 0.25s;
+}
+.v-leave-active {
+  position: absolute;
+}
