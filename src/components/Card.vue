@@ -11,7 +11,7 @@ const props = defineProps(['component', 'cKey']);
 </script>
 
 <template>
-    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full w-192 m-4 relative">
+    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full w-192 relative">
       <slot></slot>
     </div>
 </template>

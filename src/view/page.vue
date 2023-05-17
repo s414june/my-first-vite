@@ -70,10 +70,10 @@ const _countProgress = () => {
 }
 </script>
 <template>
-  <TransitionGroup>
-    <div v-for="(page, index) in pages" v-show="store.state.pageNum == index + 1" :key="index">
-      <Card>
-        <form class="mb-5">
+  <TransitionGroup tag="Card">
+    <Card v-for="(page, index) in pages" v-show="store.state.pageNum == index + 1" :key="index">
+      <form>
+        <div class="mb-5">
           <h2
             class="text-3xl font-bold before:block before:absolute before:w-2 before:h-10 before:left-0 before:bg-cyan-500">
             {{ page.title }}
@@ -85,15 +85,15 @@ const _countProgress = () => {
               @toggleChildren="_toggleChildren" @countProgress="_countProgress">
             </component>
           </div>
-        </form>
+        </div>
         <div class="w-full flex justify-center">
           <Button msg="下一頁" class="" @click="store.commit('pushPage', { router: router, num: 1 })"
             v-show="store.state.pageNum < store.state.pages.length"></Button>
           <Button msg="送出" class="w-60" @click="submit()"
             v-show="store.state.pageNum >= store.state.pages.length"></Button>
         </div>
-      </Card>
-    </div>
+      </form>
+    </Card>
   </TransitionGroup>
 </template>
 <style scope>

@@ -16,13 +16,15 @@ window.onchange = function () {
   <div class="bg-zinc-100 min-h-screen vh-for-mobile">
     <div class="grow pb-20">
       <div class="flex justify-center">
-        <router-view v-slot="{ Component }">
-          <keep-alive>
-            <Transition>
-              <component :is="Component" />
-            </Transition>
-          </keep-alive>
-        </router-view>
+        <div class="py-4 w-[calc(100%-2rem)]">
+          <router-view v-slot="{ Component }">
+            <keep-alive>
+              <Transition>
+                <component :is="Component" />
+              </Transition>
+            </keep-alive>
+          </router-view>
+        </div>
       </div>
     </div>
     <div>
